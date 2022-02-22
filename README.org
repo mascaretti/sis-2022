@@ -1,5 +1,0 @@
-#+AUTHOR:Andrea Mascaretti
-#+title: README
-* README
-
-This repository contains the code to replicate the data analysis for the SIS 2022 conference.
