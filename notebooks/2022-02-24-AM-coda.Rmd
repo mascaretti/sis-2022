@@ -1,0 +1,64 @@
+---
+title: "AM"
+output: html_notebook
+---
+
+```{r}
+library(data.table)
+DT <- fread("../data/raw/data.csv")
+```
+
+```{r}
+library(BENV1.0)
+```
+
+```{r}
+Y <- DT[, MB:NH]
+```
+
+```{r}
+X <- DT[, Year]
+Z <- matrix(data = 0, nrow = length(X), ncol = length(unique(X)) - 1)
+
+for (i in 1:length(X)) {
+  if (X[i] == -3300) Z[i, 1] = 1
+  if (X[i] == -1850) Z[i, 2] = 1
+  if (X[i] == -200) Z[i, 3] = 1
+  if (X[i] == 150) Z[i, 4] = 1
+}
+```
+
+```{r include=FALSE}
+load("../output/run_ImproperDefaultNameu_equals_1.RData")
+# env <- BENV1.0::BayesEnvelopeMC(U = Y, X = Z, u = 1, McLength = 5000, backupMc = TRUE)
+```
+
+
+
+```{r}
+library(coda)
+```
+
+```{r}
+beta_matrix <- do.call(cbind, allList$beta)
+beta_matrix <- t(beta_matrix)
+```
+
+
+```{r}
+for (i in 1:4) {
+  plot(as.mcmc(beta_matrix[, i]))
+}
+```
+```{r}
+library(Renvlp)
+```
+
+```{r}
+fr_env <- Renvlp::env(X, Y, 1)
+```
+```{r}
+fr_env
+```
+
+
