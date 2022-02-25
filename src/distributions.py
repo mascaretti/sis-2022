@@ -79,19 +79,20 @@ def discrete_bingham(A, B, N=4*10e5):
     of a Bingham distribution.
     '''
 
-    a = -1. * (A[0, 0] + B[1, 1] - A[1, 1] - B[1, 1])
+    a = -1. * (A[0, 0] + B[1, 1] - A[1, 1] - B[0, 0])
     b = B[0, 1] + B[1, 0] - A[0, 1] - A[1, 0]
     S = 2 * np.pi * (np.array([j / N for j in np.arange(1, N + 1)]) - 0.5 / N)
     log_prob = a * np.cos(S) ** 2 + b * np.cos(S) * np.sin(S) - a
     prob = np.exp(log_prob - np.max(log_prob))
     prob /= np.sum(prob)
 
-    # Select a random x
-    x = np.random.choice(a = S, p = prob)
-
+    
     # Random generator
     rng_bin = np.random.default_rng()
 
+    # Select a random x
+    x = rng_bin.choice(a=S, size=1, replace=True, p=prob, shuffle=False)
+    
     # Build the matrix
     x_1 = np.array([np.cos(x), np.sin(x)])
     x_2 = np.array([np.sin(x), -np.cos(x)]) * (-1.) ** rng_bin.binomial(n = 1, p = 0.5)
@@ -159,7 +160,7 @@ def sample_bingham(A, B, max_iter=1e5, N=4e5):
                 x = np.sqrt(rng.beta(0.5 - 1.5 * GAMMA, 0.5 - 0.5 * GAMMA))
                 lr = (a * np.power(x, 2.) + b * x * np.sqrt(1 - x**2)) - 2. * np.log(BETA) + GAMMA * np.log(-a * x**2) + GAMMA * np.log(-b * x * np.sqrt(1. - x**2))
             else:
-                x = np.sqrt(rng.beta(0.5 - 1.5 * GAMMA, 0.5 - 0.5 * GAMMA))
+                x = np.sqrt(rng.beta(0.5 - GAMMA, 0.5))
                 lr = (a * x**2. + b * x * np.sqrt(1. - x**2)) - 2 * np.log(BETA) + 0.5 * b + GAMMA * np.log(-a * x**2)
                 x = -x
         
