@@ -29,10 +29,12 @@ for (i in 1:length(X)) {
 ```
 
 ```{r include=FALSE}
-load("../output/run_ImproperDefaultNameu_equals_1.RData")
-# env <- BENV1.0::BayesEnvelopeMC(U = Y, X = Z, u = 1, McLength = 5000, backupMc = TRUE)
+env <- BENV1.0::BayesEnvelopeMC(U = Y, X = Z, u = 1, McLength = 5000, backupMc = TRUE)
 ```
 
+```{r}
+allList <- env
+```
 
 
 ```{r}
@@ -59,6 +61,13 @@ fr_env <- Renvlp::env(X, Y, 1)
 ```
 ```{r}
 fr_env
+```
+```{r}
+library(HDInterval)
+```
+
+```{r}
+HDInterval::hdi(beta_matrix[, 1])
 ```
 
 
