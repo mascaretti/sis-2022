@@ -7,9 +7,9 @@ from math import gamma
 import numpy as np
 from scipy.stats import multivariate_normal, matrix_normal
 import unittest
-from distributions import truncated_inverse_gamma, sample_bingham
+from src.distributions import truncated_inverse_gamma, sample_bingham
 from more_itertools import distinct_combinations
-from utils import sign_update
+from src.utils import sign_update
 import numba
 import warnings
 

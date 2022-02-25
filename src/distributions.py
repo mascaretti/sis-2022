@@ -2,38 +2,57 @@
 import numpy as np
 from scipy import stats
 import scipy.special as sc
+from scipy.special import gamma as gamma_function
 import warnings
 
+def densigamma(x, alpha, beta):
+    """
+    This function computes the density of an inverse gamma function
+    with the form
+    f(x) = beta^alpha / Gamma(alpha) * x^(-alpha -1) * exp^(-beta / x)
+    """
+    assert alpha > 0, "alpha must be positive"
+    assert beta > 0, "beta must be poisitive"
+    assert (x > 0).all(), "Density not defined outside the support"
+    return np.power(beta, alpha) / gamma_function(alpha) * np.power(x, - alpha - 1.) * np.exp(- beta / x)
 
-def discrete_truncated_inverse_gamma(
-    shape, rate, lower, upper,
-    epsilon=1e-5, partition=10, max_upper=10e5
-    ):
+def discrete_truncated_inverse_gamma(shape, rate, lower, upper, step, max_upper):
    
     # Check upper bound
     if upper > max_upper:
         warnings.warn("Upper bound greater than maximum upper bound.")
         upper = max_upper
     
+    # Fix grid size
+    if lower == 0.:
+        lower = (upper - lower) / 1e5
+
+    if (upper - lower) / 1000. < 1. / step:
+        x = np.array([np.arange(lower, upper, (upper - lower) / 1000.)]).T
+    else:
+        x = np.array([np.arange(lower + 0.5 / step, upper, 1. / step)]).T
+
     # Create grid
-    x = np.linspace(start = lower, stop = upper, num = partition)
-    log_pdf = stats.invgamma.logpdf(x, shape, 1. / rate)
+    log_pdf = - rate / x + np.log(x) * (- shape - 1)
     prob = np.exp(log_pdf - np.max(log_pdf))
     prob /= np.sum(prob)
 
     rng = np.random.default_rng()
 
-    return rng.choice(a = x, size=1, replace=True, p=prob, shuffle=False)
+    return rng.choice(a = x, size=1, replace=True, p=np.squeeze(prob), shuffle=False)
 
 
-def truncated_inverse_gamma(shape, rate, lower, upper, max_iter=10e5, epsilon=10e-5, partition=10, max_upper=10e5):
+def truncated_inverse_gamma(shape, rate, lower, upper, max_iter=10e5, partition=10, max_upper=10e5):
     '''
     This function compute a sample from a truncated inverse gamma
     '''
 
     # Check input
     np.testing.assert_array_less(lower, upper, err_msg="Lower bound should be smaller than upper bound.")
-    assert lower >= 0, "Lower bound cannot be negative."
+    assert lower >= 0., "Lower bound cannot be negative."
+    assert shape > 0., "Shape must be positive"
+    assert rate > 0., "Rate must be positive"
+    scale = np.power(rate, -1.)
 
     rng = np.random.default_rng()
 
@@ -41,7 +60,7 @@ def truncated_inverse_gamma(shape, rate, lower, upper, max_iter=10e5, epsilon=10
     rejection_bool = False
     counter = 0
     while rejection_bool == False:
-        y = rng.gamma(shape, np.power(rate, -1.))
+        y = rng.gamma(shape, scale)
         if 1. / y >= lower and 1. / y <= upper:
             rejection_bool = True
         if counter >= max_iter:
@@ -52,7 +71,7 @@ def truncated_inverse_gamma(shape, rate, lower, upper, max_iter=10e5, epsilon=10
         return 1. / y
     else:
         warnings.warn("Exceeded maximum number of iterations: resorting to approximate distribution.")
-        return discrete_truncated_inverse_gamma(shape, rate, lower, upper, epsilon, partition, max_upper)
+        return discrete_truncated_inverse_gamma(shape, rate, lower, upper, partition, max_upper)
 
 def discrete_bingham(A, B, N=4*10e5):
     '''

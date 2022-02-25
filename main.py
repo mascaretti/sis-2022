@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
 
     # Samplings
-    mcmc = gibbs_sampler(Y, X, u, prior, starting_vals, 5000)
+    mcmc = gibbs_sampler(Y, X, u, prior, starting_vals, 5)
 
     # Saving
     nowTime = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
