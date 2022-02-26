@@ -3,16 +3,17 @@ import warnings
 
 import numpy as np
 import scipy
+from scipy.stats import matrix_normal
 import tqdm
-import time
 from scipy import stats
 import numba
+from more_itertools import distinct_combinations
 
 import src.updates as updates
 from src.distributions import sample_bingham, truncated_inverse_gamma
 from src.utils import sign_update
 
-
+numba.jit(nopython=True)
 def gibbs_sampler(Y: np.ndarray, X: np.ndarray, u: int, prior: dict, starting_vals: dict, n_iter: int, debug=False) -> dict:
     '''
     This function perform the Gibbs sampling
@@ -44,6 +45,7 @@ def gibbs_sampler(Y: np.ndarray, X: np.ndarray, u: int, prior: dict, starting_va
     Beta = Gamma @ eta
     Sigma = Gamma @ np.diag(omega) @ Gamma.T + Gamma_0 @ np.diag(omega_0) @ Gamma_0.T
 
+
     # Storing MCMC:
     # For each variable, we have a list
     # with number of elements equal to the number of components of the mixture.
@@ -71,31 +73,81 @@ def gibbs_sampler(Y: np.ndarray, X: np.ndarray, u: int, prior: dict, starting_va
     alpha_0 = prior.get("omega_0").get("alpha_0")
     psi_0 = prior.get("omega_0").get("psi_0")
 
+    # Compute invariant quantities
+    Y_bar = np.mean(Y, axis=0)
+    Y_c = Y - Y_bar
+    e_tilde = (Y_c.T @ X + e @ C) @ np.linalg.inv(X.T @ X + C)
+    G_tilde = Y_c.T @ Y_c + e @ C @ e.T  - e_tilde @ (X.T @ X + C) @ e_tilde.T
 
     # Beging MCMC iterations
-    start_time = time.time()
     for i in tqdm.tqdm(range(n_iter), desc="Sampling...", ascii=False, ncols=75):
 
-        # Update mu --------
-        mu = updates.update_mu(Y, Sigma, mu_0, Sigma_0)
-        mcmc.get("mu")[i] = mu
+        # Update Omega -----
+        omega_rates = np.diag(Gamma.T @ G_tilde @ Gamma)
+
+
+        for j in range(u):
+            # Upper Bound
+            if j == 0:
+                upper = np.inf
+            else:
+                upper = omega[j - 1]
+            # Lower Bound
+            if j == u - 1.:
+                lower = 0.
+            else:
+                lower = omega[j + 1]
+            omega[j] = truncated_inverse_gamma(shape = 0.5 * (n + 2 * alpha - 1), rate = 0.5 * (omega_rates[j] + 2 * psi), lower=lower, upper=upper)
+
+        mcmc["omega"][i] = omega
+
+
+        # Update Omega_0 -----
+        omega_0_rates = np.diag(Gamma_0.T @ (Y_c.T @ Y_c) @ Gamma_0)
+
+        for j in range(r - u):
+            # Upper Bound
+            if j == 0:
+                upper = np.inf
+            else:
+                upper = omega_0[j - 1]
+            # Lower bound
+            if j == (r - u) - 1:
+                lower = 0.
+            else:
+                lower = omega_0[j + 1]
+            omega_0[j] = truncated_inverse_gamma(0.5 * (n + 2 * alpha_0 - 1), 0.5 * (omega_0_rates[j] + 2 * psi_0), lower, upper)
+
+        mcmc["omega_0"][i] = omega_0
 
         # Update Gammas ------
-        O = updates.update_gammas(Gamma, Gamma_0, omega, omega_0, Y, X, G, D, e, C)
+        O = np.column_stack((Gamma, Gamma_0))
+        pairs = list(distinct_combinations([j for j in range(r)], 2))
+
+        for pair in pairs:
+            N = O[:, pair]
+            l, j = pair
+            if 0 <= l < u and u <= j < r:
+                A = 0.5 * N.T @ (G_tilde / omega[l] + G / D[l, l]) @ N
+                B = 0.5 * N.T @ (Y_c.T @ Y_c / omega_0[j - u] + G / D[j, j]) @ N
+            elif 0 <= l < u and 0 <= j < u:
+                A = 0.5 * N.T @ (G_tilde / omega[l] + G / D[l, l]) @ N
+                B = 0.5 * N.T @ (G_tilde / omega[j] + G / D[j, j]) @ N
+            else:
+                A = 0.5 * N.T @ (Y_c.T @ Y_c / omega_0[l - u] + G / D[l, l]) @ N
+                B = 0.5 * N.T @ (Y_c.T @ Y_c / omega_0[j - u]  + G / D[j, j]) @ N
+            
+            O[:, pair] = sign_update(N @ sample_bingham(A, B))
+
         Gamma = O[:, 0:u]
         Gamma_0 = O[:, u:r]
-        mcmc.get("Gamma")[i] = Gamma
-        mcmc.get("Gamma_0")[i] = Gamma_0
+        mcmc["Gamma"][i] = Gamma
+        mcmc["Gamma_0"][i] = Gamma_0
 
         # Update eta --------
-        eta = updates.update_eta(Y, X, Gamma, omega, e, C)
-        mcmc.get("eta")[i] = eta
+        eta = matrix_normal(Gamma.T @ e_tilde, np.diag(omega), np.linalg.inv(X.T @ X + C)).rvs()
+        mcmc["eta"][i] = eta
 
-        # Update Omegas -----
-        omega = updates.update_omega(omega, Gamma, Y, X, e, C, alpha, psi)
-        mcmc.get("omega")[i] = omega
-        omega_0 = updates.update_omega(omega_0, Gamma_0, Y, X, e, C, alpha_0, psi_0)
-        mcmc.get("omega_0")[i] = omega_0
 
         # Compute Sigma -----
         if debug:
@@ -105,15 +157,22 @@ def gibbs_sampler(Y: np.ndarray, X: np.ndarray, u: int, prior: dict, starting_va
             assert np.diag(omega_0).shape == (r - u, r - u), f"The dimensions of Omega_0 for component {j} at iteration {i} are not ({r - u}, {r - u})"
 
         Sigma = Gamma @ np.diag(omega) @ Gamma.T + Gamma_0 @ np.diag(omega_0) @ Gamma_0.T
-        mcmc.get("Sigma")[i] = Sigma
+        mcmc["Sigma"][np.array([i])] = Sigma
 
         # Compute beta -----
         if debug:
             assert eta.shape == (u, p), f"The dimension of eta (iteration {i}) are not ({u}, {p})"
+        
         Beta = Gamma @ eta
-        mcmc.get("Beta")[i] = Beta
+        mcmc["Beta"][i] = Beta
 
-
-    end_time = time.time()
+        # Update mu --------
+        rng = np.random.default_rng()
+        Sigma_0_inv = np.linalg.inv(Sigma_0)
+        Sigma_1_inv = np.linalg.inv(Sigma / n)
+        Sigma_c = np.linalg.inv(Sigma_0_inv + Sigma_1_inv)
+        mu_c = Sigma_c @ (Sigma_0_inv @ mu_0 + Sigma_1_inv @ Y_bar)
+        mu = rng.multivariate_normal(mu_c, Sigma_c)
+        mcmc["mu"][i] = mu
 
     return mcmc
