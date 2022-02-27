@@ -170,9 +170,21 @@ $\left( \mu, \eta, \left(\Gamma, \Gamma_0\right), \Omega, \Omega_0
 $\Omega_0$ to be diagonal matrices with entries disposed in decreasing
 order. This is equivalent to post-multiplying $\Gamma$ and $\Gamma_0$
 by the matrices of eigenvectors of the original $\Omega$ and
-$\Omega_0$. From a mathematical point of view, this is equivalent to fix $\Gamma$ and $\Gamma_0$ to be bases of the envelope and, thus, as elements of a subset of a Stiefel manifold restricted to have that the maximum element for each column as positive sign, denoted by $S^+_{\left( \cdot,\; \cdot \right)}$. In this respect, we notice that the Stiefel manifold of arbitrary finite dimensions $\left( a, a \right)$ is a compact unimodular group with a unique Haar measure, which induces a measure on $S_{\left( a, b\right)}$ and $S^+_{\left( a, b \right)}$.
+$\Omega_0$. From a mathematical point of view, this is equivalent to
+fix $\Gamma$ and $\Gamma_0$ to be bases of the envelope and, thus, as
+elements of a subset of a Stiefel manifold restricted to have that the
+maximum element for each column as positive sign, denoted by
+$S^+_{\left( \cdot,\; \cdot \right)}$. In this respect, we notice that
+the Stiefel manifold of arbitrary finite dimensions
+$\left( a, a \right)$ is a compact unimodular group with a unique Haar
+measure, which induces a measure on $S_{\left( a, b\right)}$ and
+$S^+_{\left( a, b \right)}$.
 
-The parameter space is then given by $M_{\left( r, 1 \right)} \times M_{\left( u, p \right)}\times S^+_{\left( r, r \right)} \times O_u \times O_{r -u} $, where $O_a$ is the set of diagonal matrices of dimension $a$ with entries disposed in decreasing order.
+The parameter space is then given by
+$M_{\left( r, 1 \right)} \times M_{\left( u, p \right)}\times
+S^+_{\left( r, r \right)} \times O_u \times O_{r -u} $, where $O_a$ is
+the set of diagonal matrices of dimension $a$ with entries disposed in
+decreasing order.
 
 We define the prior on the parameters as follows:
 
@@ -183,7 +195,12 @@ We define the prior on the parameters as follows:
 \item Denoting by $\omega$ and $\omega_0$ the diagonal vectors of, respectively, $\Omega$ and $\Omega_0$, we assume that, a priori, they are distributed as order statistics of $u$ and $r - u$ independent and identically distributed observations from Inverse-Gamma distributions of shape and rate parameters $\alpha$, $\psi$ and $\alpha_0$, $\psi_0$.
 \end{enumerate}
 
-Notice that the main difference between our work and \cite{khareBayesianApproachEnvelope2017} is the prior on $\mu$. From a computational point of view, this means that the structure of the Gibbs sampler is similar, the only difference being the structure of the full-conditional for $\mu$, which can be easily computed to be of the form
+Notice that the main difference between our work and
+\cite{khareBayesianApproachEnvelope2017} is the prior on $\mu$. From a
+computational point of view, this means that the structure of the
+Gibbs sampler is similar, the only difference being the structure of
+the full-conditional for $\mu$, which can be easily computed to be of
+the form
 
 \begin{equation}
   \label{eq:6}
@@ -192,9 +209,13 @@ Notice that the main difference between our work and \cite{khareBayesianApproach
 
 where $$\Sigma_{c} = \left( \Sigma^{-1}_0 + \left(\frac{\Sigma}{n} \right)^{-1}\right)^{-1}$$ and $$\mu_{c} = \Sigma_{c} \left( \Sigma_0^{-1} \mu_0 + \left(\frac{\Sigma}{n} \right)^{-1} \bar{Y} \right).$$
 
-Notice that the Harris ergodicity of the chain is also a straightforward extension of \cite{khareBayesianApproachEnvelope2017}.
+Notice that the Harris ergodicity of the chain is also a
+straightforward extension of \cite{khareBayesianApproachEnvelope2017}.
 
 \section{Simulation and Data Analysis}
+We now perform a test for different values of the prior distribution
+on a synthetic dataset. The aim is to assess the sensitivity with
+respect to the choice of the hyperparameters.
 
 \input{referenc}
 \end{document}
