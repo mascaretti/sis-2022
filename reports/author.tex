@@ -215,7 +215,29 @@ straightforward extension of \cite{khareBayesianApproachEnvelope2017}.
 \section{Simulation and Data Analysis}
 We now perform a test for different values of the prior distribution
 on a synthetic dataset. The aim is to assess the sensitivity with
-respect to the choice of the hyperparameters.
+respect to the choice of the hyperparameters. We generated $n = 100$
+data points from a normal distribution with zero mean and identity
+matrix as covariance. We set $u = 1$, $p = 2$, $r = 3$ The parameters
+are defined as follows:
+
+\begin{enumerate}
+\item $\mu = \left( 12, 12, 12 \right)$
+\item $\omega = 6.2$
+\item $\omega_0 = \left( 3.2, 1.4 \right)$
+\item $O = I_r$
+\end{enumerate}
+
+and $Y_i$ are randomly drawn a multivariate normal with mean
+$\mu + \Gamma \eta X_i$ and covariance
+$\Gamma \Omega \Gamma^T + \Gamma_0 \Omega_0 \Gamma_{0}^T$.  As for the
+hyperparamaters, we distinguish between three cases. We focus on $\mu$
+as it is the most relevant change we make. In the first case, we use a
+weakly informative proper prior with $\mu_0 = \left( 0, 0, 0 \right)$
+and $\Sigma_0 = \kappa I_r$, with $\kappa = 10$. In the second test
+case, we set $\mu_0 = \bar{Y}$ and $\Sigma = \hat{\Sigma}$. Finally,
+we consider the improper prior as in
+\cite{khareBayesianApproachEnvelope2017}. For each case study, we run
+a Gibbs sampler for 2000 iterations, with a burn in of 500.
 
 \input{referenc}
 \end{document}

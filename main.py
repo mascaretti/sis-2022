@@ -12,7 +12,7 @@ if __name__ == "__main__":
     n = 100
 
     rng = np.random.default_rng(random_state)
-    X = rng.multivariate_normal(mean = np.zeros(p), cov = np.eye(p))
+    X = rng.multivariate_normal(mean = np.zeros(p), cov = np.eye(p), size = n)
 
     Gamma = np.eye(r)[:, 0].reshape((r, u))
     Gamma_0 = np.eye(r)[:, [1, 2]]
