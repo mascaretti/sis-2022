@@ -41,9 +41,9 @@ if __name__ == "__main__":
     # PRIOR ---
     prior = dict()
 
-    mu_0 = np.zeros(r)
+    mu_0 = np.mean(Y, axis=0)
     kappa = 10.
-    Sigma_0 = kappa * np.eye(r)
+    Sigma_0 = np.cov(Y)
     C = np.eye(p)
     e = np.zeros((r, p))
     D = np.eye(r)
@@ -102,11 +102,11 @@ if __name__ == "__main__":
     print("\n\n")
 
     # Samplings
-    mcmc = gibbs_sampler(Y, X, u, prior, starting_vals, 2000)
+    mcmc = gibbs_sampler(Y, X, u, prior, starting_vals, 1000)
 
     # Saving
     nowTime = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-    file_name = f"/home/masca/Insync/andrea.mascaretti@studenti.unipd.it/Google Drive/phd/envelopes_files/mcmc/prior/mcmc-{nowTime}.pkl"
+    file_name = f"data/interim/mcmc-{nowTime}.pkl"
 
     with open(file_name, 'wb') as file:
     # A new file will be created
