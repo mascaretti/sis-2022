@@ -36,15 +36,15 @@
 
 \begin{document}
 
-\title*{Contribution Title in English}
+\title*{Construction of a proper prior for a Bayesian Envelope Model}
 % Use \titlerunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
-\subtitle{\emph{Contribution Title in Italian}}
-\author{Name of First Author and Name of Second Author}
+\subtitle{\emph{Costruzione di una prior propria per un modello Envelope bayesiano}}
+\author{Andrea Mascaretti and Antonio Canale}
 % Use \authorrunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
-\institute{Name of First Author \at Name, Address of Institute, \email{name@email.address}
-\and Name of Second Author \at Name, Address of Institute \email{name@email.address}}
+\institute{Andrea Mascaretti \at University of Padova, Via Cesare Battisti, 241, 35121, Padova (PD), Italy, \email{mascaretti@stat.unipd.it}
+\and Antonio Canale \at University of Padova, Via Cesare Battisti, 241, 35121, Padova (PD), Italy, \email{antonio.canale@unipd.it}}
 %
 % Use the package "url.sty" to avoid
 % problems with special characters
@@ -56,260 +56,152 @@
 \abstract{\emph{Abstract in Italian}}
 \keywords{key word 1, key word 2, \ldots}
 
-\section{Section Heading}
+\section{Response Envelopes}
 \label{sec:1}
-Use the template \emph{chapter.tex} together with the Springer document class SVMono (monograph-type books) or SVMult (edited books) to style the various elements of your chapter content in the Springer layout.
-
-Instead of simply listing headings of different levels we recommend to
-let every heading be followed by at least a short passage of text.
-Further on please use the \LaTeX\ automatism for all your
-cross-references and citations. And please note that the first line of
-text that follows a heading is not indented, whereas the first lines of
-all subsequent paragraphs are.
-
-\section{Section Heading}
-\label{sec:2}
-% Always give a unique label
-% and use \ref{<label>} for cross-references
-% and \cite{<label>} for bibliographic references
-% use \sectionmark{}
-% to alter or adjust the section heading in the running head
-Instead of simply listing headings of different levels we recommend to
-let every heading be followed by at least a short passage of text.
-Further on please use the \LaTeX\ automatism for all your
-cross-references and citations.
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-Use the standard \verb|equation| environment to typeset your equations, e.g.
-%
+Envelopes
+\cite{cookENVELOPEMODELSPARSIMONIOUS2010,cookIntroductionEnvelopesDimension2018},
+are a class of models aimed at increasing the efficiency of
+multivariate regression by exploiting the relations between response
+and predictors that affect the accuracy of the results and are not
+taken into account by standard methods.  Within the usual multivariate
+regression setting, the expected value of a random variable
+$Y \in R^r$ is given a functional form such that we get
 \begin{equation}
-a \times b = c\;,
+  \label{eq:1}
+  Y_i = \mu + \beta X_i + \varepsilon_i, \;\; i = 1, \dots, n,
 \end{equation}
-%
-however, for multiline equations we recommend to use the \verb|eqnarray| environment\footnote{In physics texts please activate the class option \texttt{vecphys} to depict your vectors in \textbf{\itshape boldface-italic} type - as is customary for a wide range of physical subjects}.
-\begin{eqnarray}
-a \times b = c \nonumber\\
-\vec{a} \cdot \vec{b}=\vec{c}
-\label{eq:01}
-\end{eqnarray}
 
-\subsection{Subsection Heading}
-\label{subsec:2}
-Instead of simply listing headings of different levels we recommend to
-let every heading be followed by at least a short passage of text.
-Further on please use the \LaTeX\ automatism for all your
-cross-references\index{cross-references} and citations\index{citations}
-as has already been described in Sect.~\ref{sec:2}.
-
-\begin{quotation}
-Please do not use quotation marks when quoting texts! Simply use the \verb|quotation| environment -- it will automatically render Springer's preferred layout.
-\end{quotation}
-
-
-\subsubsection{Subsubsection Heading}
-Instead of simply listing headings of different levels we recommend to
-let every heading be followed by at least a short passage of text.
-Further on please use the \LaTeX\ automatism for all your
-cross-references and citations as has already been described in
-Sect.~\ref{subsec:2}, see also Fig.~\ref{fig:1}\footnote{If you copy
-text passages, figures, or tables from other works, you must obtain
-\textit{permission} from the copyright holder (usually the original
-publisher). Please enclose the signed permission with the manucript. The
-sources\index{permission to print} must be acknowledged either in the
-captions, as footnotes or in a separate section of the book.}
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-% For figures use
-%
-\begin{figure}[b]
-\sidecaption
-% Use the relevant command for your figure-insertion program
-% to insert the figure file.
-% For example, with the graphicx style use
-\includegraphics[scale=.65]{figure}
-%
-% If no graphics program available, insert a blank space i.e. use
-%\picplace{5cm}{2cm} % Give the correct figure height and width in cm
-%
-\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
-\label{fig:1}       % Give a unique label
-\end{figure}
-
-
-\paragraph{Paragraph Heading} %
-Instead of simply listing headings of different levels we recommend to
-let every heading be followed by at least a short passage of text.
-Further on please use the \LaTeX\ automatism for all your
-cross-references and citations as has already been described in
-Sect.~\ref{sec:2}.
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-For typesetting numbered lists we recommend to use the \verb|enumerate| environment -- it will automatically render Springer's preferred layout.
-
-\begin{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\begin{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{enumerate}
-
-
-\subparagraph{Subparagraph Heading} In order to avoid simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}, see also Fig.~\ref{fig:2}.
-
-For unnumbered list we recommend to use the \verb|itemize| environment -- it will automatically render Springer's preferred layout.
-
-\begin{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development, cf. Table~\ref{tab:1}.}
-\begin{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{itemize}
-
-\begin{figure}[t]
-\sidecaption[t]
-% Use the relevant command for your figure-insertion program
-% to insert the figure file.
-% For example, with the option graphics use
-\includegraphics[scale=.65]{figure}
-%
-% If no graphics program available, insert a blank space i.e. use
-%\picplace{5cm}{2cm} % Give the correct figure height and width in cm
-%
-%\caption{Please write your figure caption here}
-\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
-\label{fig:2}       % Give a unique label
-\end{figure}
-
-\runinhead{Run-in Heading Boldface Version} Use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}.
-
-\subruninhead{Run-in Heading Italic Version} Use the \LaTeX\ automatism for all your cross-refer\-ences and citations as has already been described in Sect.~\ref{sec:2}\index{paragraph}.
-% Use the \index{} command to code your index words
-%
-% For tables use
-%
-\begin{table}
-\caption{Please write your table caption here}
-\label{tab:1}       % Give a unique label
-%
-% Follow this input for your own table layout
-%
-\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
-\hline\noalign{\smallskip}
-Classes & Subclass & Length & Action Mechanism  \\
-\noalign{\smallskip}\svhline\noalign{\smallskip}
-Translation & mRNA$^a$  & 22 (19--25) & Translation repression, mRNA cleavage\\
-Translation & mRNA cleavage & 21 & mRNA cleavage\\
-Translation & mRNA  & 21--22 & mRNA cleavage\\
-Translation & mRNA  & 24--26 & Histone and DNA Modification\\
-\noalign{\smallskip}\hline\noalign{\smallskip}
-\end{tabular}
-$^a$ Table foot note (with superscript)
-\end{table}
-%
-\section{Section Heading}
-\label{sec:3}
-% Always give a unique label
-% and use \ref{<label>} for cross-references
-% and \cite{<label>} for bibliographic references
-% use \sectionmark{}
-% to alter or adjust the section heading in the running head
-Instead of simply listing headings of different levels we recommend to
-let every heading be followed by at least a short passage of text.
-Further on please use the \LaTeX\ automatism for all your
-cross-references and citations as has already been described in
-Sect.~\ref{sec:2}.
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-If you want to list definitions or the like we recommend to use the Springer-enhanced \verb|description| environment -- it will automatically render Springer's preferred layout.
-
-\begin{description}[Type 1]
-\item[Type 1]{That addresses central themes pertainng to migration, health, and disease. In Sect.~\ref{sec:1}, Wilson discusses the role of human migration in infectious disease distributions and patterns.}
-\item[Type 2]{That addresses central themes pertainng to migration, health, and disease. In Sect.~\ref{subsec:2}, Wilson discusses the role of human migration in infectious disease distributions and patterns.}
-\end{description}
-
-\subsection{Subsection Heading} %
-In order to avoid simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Use the \LaTeX\ automatism for all your cross-references and citations citations as has already been described in Sect.~\ref{sec:2}.
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-\begin{svgraybox}
-If you want to emphasize complete paragraphs of texts we recommend to use the newly defined Springer class option \verb|graybox| and the newly defined environment \verb|svgraybox|. This will produce a 15 percent screened box 'behind' your text.
-
-If you want to emphasize complete paragraphs of texts we recommend to use the newly defined Springer class option and environment \verb|svgraybox|. This will produce a 15 percent screened box 'behind' your text.
-\end{svgraybox}
-
-
-\subsubsection{Subsubsection Heading}
-Instead of simply listing headings of different levels we recommend to
-let every heading be followed by at least a short passage of text.
-Further on please use the \LaTeX\ automatism for all your
-cross-references and citations as has already been described in
-Sect.~\ref{sec:2}.
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-\begin{theorem}
-Theorem text goes here.
-\end{theorem}
-%
-% or
-%
-\begin{definition}
-Definition text goes here.
-\end{definition}
-
-\begin{proof}
-%\smartqed
-Proof text goes here.
-\qed
-\end{proof}
-
-\paragraph{Paragraph Heading} %
-Instead of simply listing headings of different levels we recommend to
-let every heading be followed by at least a short passage of text.
-Further on please use the \LaTeX\ automatism for all your
-cross-references and citations as has already been described in
-Sect.~\ref{sec:2}.
-
-Note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-%
-% For built-in environments use
-%
-\begin{theorem}
-Theorem text goes here.
-\end{theorem}
-%
-\begin{definition}
-Definition text goes here.
-\end{definition}
-%
-\begin{proof}
-\smartqed
-Proof text goes here.
-\qed
-\end{proof}
-%
-\begin{acknowledgement}
-If you want to include acknowledgments of assistance and the like at the end of an individual chapter please use the \verb|acknowledgement| environment -- it will automatically render Springer's preferred layout.
-\end{acknowledgement}
-%
-\section*{Appendix}
-\addcontentsline{toc}{section}{Appendix}
-%
-%
-When placed at the end of a chapter or contribution (as opposed to at the end of the book), the numbering of tables, figures, and equations in the appendix section continues on from that in the main text. Hence please \textit{do not} use the \verb|appendix| command when writing an appendix at the end of your chapter or contribution. If there is only one the appendix is designated ``Appendix'', or ``Appendix 1'', or ``Appendix 2'', etc. if there is more than one.
+where $\left\{X_i\right\}_{i = 1}^n$ is a sequence of non-stochastic
+vectors, with $X_i \in R^p$ for $i = 1, \dots, n$, the errors are
+independent and identically distributed multivariate normal vectors
+with zero mean and covariance $\Sigma$, $\alpha \in R^r$ is an unknown
+vector of intercepts and $\beta \in M_{\left( r, p \right)}$ (where
+$M_{\left( a, b \right)}$ denotes the space of real matrices of dimensions
+$\left( a, b \right)$) is the unknown vector of regression
+coefficients.  For simplicity (and without loss of generality), we
+assume that the predictors are centred, $\sum_{i = 1}^n X_i =
+0$. Moreover, let $Y$ be the $\left( n \times r \right)$ matrix of
+rows $\left(Y_i - \bar{Y}\right)^T$, where $\bar{Y}$ is the sample
+mean, and $Y_0$ be the non-centred matrix. In a similar fashion, let
+$X = \left\{X_i^T\right\}$ be the matrix of the predictors,
+$S_{Y, X} = n^{-1} Y^TX$ and $S_X = n^{-1}X^TX$. The maximum
+likelihood estimator is
 
 \begin{equation}
-a \times b = c
+  \label{eq:2}
+  B = S_{Y, X}S_X^{-1},
 \end{equation}
+
+incidentally equal the ordinary least squares estimator. From Eq.
+\ref{eq:2}, we notice that this is akin to performing $r$ separate
+univariate regressions: one for every element of $Y$ on $X$. Inference
+on $\beta_{j,k}$, the $\left( j, k \right)$th element of $\beta$ is
+the same we would obtain by constructing a univariate model. The model
+in Eq. \ref{eq:1} becomes operational when inference is conducted
+simultaneously on different rows of $\beta$ or various elements of $Y$
+jointly.
+
+The intuition behind envelope models is that there might be linear
+combinations of the response vectors whose distribution is invariant
+with respect to the non-stochastic predictors. Explicitly modelling
+for this property allows to obtain estimator whose variance is
+reduced. We call such linear combinations of $Y$ $X$-invariant. Notice
+that for a linear transformation $G \in M_{\left( r, q \right)}$, with
+$q \leq r$, if $G^T Y$ is invariant, then also $A^T G^T Y$ has the
+same property for any non-stochastic matrix
+$A \in M_{\left( q, q \right)}$. In other words, only
+$\mathrm{span}\left( G \right)$ is identifiable.
+
+From a mathematical point of view, this is equivalent to assuming the
+existence of two matrices $\Gamma$ and $\Gamma_0$ such that
+$O = \left[ \Gamma \;  \Gamma_0 \right]$ is orthogonal. We obtain
+
+\begin{enumerate}
+\item $\Gamma_0^T Y | X \sim \Gamma_0^T Y$
+\item $\Gamma^T Y \perp \Gamma_0^T Y | X$
+\end{enumerate}
+
+The conditions entail that
+$\mathrm{span}\left( \beta \right) \subseteq \mathrm{span}\left(
+  \Gamma \right)$ and
+$\Sigma = \Sigma_1 + \Sigma_2 = P_{\Gamma}\Sigma P_{\Gamma} +
+Q_{\Gamma} \Sigma Q_{\Gamma}$, where $P_{\left(\cdot\right)}$ is the
+orthogonal projector operation on a space and
+$Q_{\left(\cdot\right)} = I - P_{\left(\cdot\right)}$ is the
+projection on the orthogonal space. In this scenario,
+$\mathrm{span}\left( \Gamma \right)$ is a reducing subspace of
+$\Sigma$ (\cite{cookENVELOPEMODELSPARSIMONIOUS2010}). The $\Sigma$-envelope of $\mathcal{B} = \mathrm{span}\left( \beta \right)$, $\mathcal{E}_{\Sigma} \left( \mathcal{B} \right)$, is the smallest reducing subspace of $\Sigma$ that contains $\mathcal{B}$.
+
+Model in Eq. \ref{eq:1} can be rewritten as
+
+\begin{equation}
+  \label{eq:3}
+  Y_i = \mu + \Gamma \eta X_i + \varepsilon,
+\end{equation}
+where $\beta = \Gamma \eta$, $\Gamma \in M_{\left( r, u \right)}$ is
+an orthogonal basis of
+$\mathcal{E}_{\Sigma}\left( \mathcal{B} \right)$ and $u$ is the
+dimension of the envelope
+$\mathcal{E}_{\Sigma}\left( \mathcal{B} \right)$. Moreover, the
+variance is
+$\Sigma = \Sigma_1 + \Sigma_2 = \Gamma \Omega \Gamma^T + \Gamma_0
+\Omega_0 \Gamma_0^T$, where $\Omega \in M_{\left( u, u \right)}$ and $\Omega_0 \in M_{\left( r-u, r-u \right)}$ are two diagonal matrices carrying the coordinate information with respect to the basis $\Gamma$ and $\Gamma_0$.
+
+\subsection{Bayesian Envelopes}
+The only contribution, to the best of our knowledge, on Bayesian
+envelopes models is \cite{khareBayesianApproachEnvelope2017}. The
+rationale behind Bayesian envelopes is that it allows to quantify the
+uncertainty of the predictions by computing the posterior distribution
+(as opposed to bootstrap or asymptotic considerations), as well as
+extending the model to the cases where $n < r$. Moreover, prior
+information can be incorporated into the model, be it on the values of
+the parameters or to induce sparsity or other desirable properties. As
+for the selection of $u$, the dimension of the envelope,
+\cite{khareBayesianApproachEnvelope2017} adopt a Deviance Information
+Criterion to obtain the best value, in lieu of the Likelihood Ratio
+Tests used within the frequentist framework.  The interest in
+obtaining a proper prior distribution for a Bayesian envelope stems
+from the fact that this is a prerequisite to extend it to more complex
+scenarios, such as mixtures or nonparametric formulations.
+
+The prior distribution is defined on the parameters
+$\left( \mu, \eta, \left(\Gamma, \Gamma_0\right), \Omega, \Omega_0
+\right)$. Notice that, for identifiability, we constrain $\Omega$ and
+$\Omega_0$ to be diagonal matrices with entries disposed in decreasing
+order. This is equivalent to post-multiplying $\Gamma$ and $\Gamma_0$
+by the matrices of eigenvectors of the original $\Omega$ and
+$\Omega_0$. From a mathematical point of view, this is equivalent to fix $\Gamma$ and $\Gamma_0$ to be bases of the envelope and, thus, as elements of a subset of a Stiefel manifold restricted to have that the maximum element for each column as positive sign, denoted by $S^+_{\left( \cdot,\; \cdot \right)}$. In this respect, we notice that the Stiefel manifold of arbitrary finite dimensions $\left( a, a \right)$ is a compact unimodular group with a unique Haar measure, which induces a measure on $S_{\left( a, b\right)}$ and $S^+_{\left( a, b \right)}$.
+
+The parameter space is then given by $M_{\left( r, 1 \right)} \times M_{\left( u, p \right)}\times S^+_{\left( r, r \right)} \times O_u \times O_{r -u} $, where $O_a$ is the set of diagonal matrices of dimension $a$ with entries disposed in decreasing order.
+
+We define the prior on the parameters as follows:
+
+\begin{enumerate}
+\item $\mu$ is set to be independent from the other parameters. We endow it with a multivariate normal distribution, so that $\pi \left( \mu \right) = \mathcal{N}_r \left( \mu_0, \Sigma_0 \right)$, defined with respect to Lebesgue measure on $M_{\left( r, 1 \right)}$.
+\item The conditional prior on $\eta$ is a matrix normal: $$\pi \left( \eta | \left( \Gamma, \Gamma_0, \Omega, \Omega_0 \right) \right) = \mathcal{N}_{\left( u, p \right)}\left( \Gamma^T, \Omega, C^{-1} \right),$$ where $C^{-1}$ is a positive definite matrix in $M_{\left( p, p \right)}$.
+\item The prior on $O = \left( \Gamma, \Gamma_0 \right)$ is a matrix Bingham distribution with parameters $G$ and $D$, where $G$ is a positive semi-definite matrix in $M_{\left( r, r \right)}$ and $D$ is in $O_r$ with positive entries. Thus, $\pi \left( O \right) = \mathcal{B}_{\left( r, r \right)}\left( G, D^{-1} \right)$. The density is proportional to $\exp{\left\{ \left(-1/2\right) \mathrm{tr}\left( D^{-1}O^TGO\right) \right\}}$
+\item Denoting by $\omega$ and $\omega_0$ the diagonal vectors of, respectively, $\Omega$ and $\Omega_0$, we assume that, a priori, they are distributed as order statistics of $u$ and $r - u$ independent and identically distributed observations from Inverse-Gamma distributions of shape and rate parameters $\alpha$, $\psi$ and $\alpha_0$, $\psi_0$.
+\end{enumerate}
+
+Notice that the main difference between our work and \cite{khareBayesianApproachEnvelope2017} is the prior on $\mu$. From a computational point of view, this means that the structure of the Gibbs sampler is similar, the only difference being the structure of the full-conditional for $\mu$, which can be easily computed to be of the form
+
+\begin{equation}
+  \label{eq:6}
+  \pi \left( \mu | \eta, \left( \Gamma, \Gamma_0 \right), \omega, \omega_0, Y \right) = \mathcal{N}_r\left( \mu_{c}, \Sigma_{c} \right),
+\end{equation}
+
+where $$\Sigma_{c} = \left( \Sigma^{-1}_0 + \left(\frac{\Sigma}{n} \right)^{-1}\right)^{-1}$$ and $$\mu_{c} = \Sigma_{c} \left( \Sigma_0^{-1} \mu_0 + \left(\frac{\Sigma}{n} \right)^{-1} \bar{Y} \right).$$
+
+Notice that the Harris ergodicity of the chain is also a straightforward extension of \cite{khareBayesianApproachEnvelope2017}.
+
+\section{Simulation and Data Analysis}
 
 \input{referenc}
 \end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-parse-self: t
+%%% TeX-auto-save: t
+%%% End:

@@ -1,0 +1,21 @@
+\begin{thebibliography}{1}
+
+\bibitem{cookIntroductionEnvelopesDimension2018}
+R.~D. Cook.
+\newblock {\em An Introduction to Envelopes: Dimension Reduction for Efficient
+  Estimation in Multivariate Statistics}.
+\newblock Wiley Series in Probability and Statistics. {John Wiley \& Sons},
+  {Hoboken, NJ}, 1st edition edition, 2018.
+
+\bibitem{cookENVELOPEMODELSPARSIMONIOUS2010}
+R.~D. Cook, B.~Li, and F.~Chiaromonte.
+\newblock {{ENVELOPE MODELS FOR PARSIMONIOUS AND EFFICIENT MULTIVARIATE LINEAR
+  REGRESSION}}.
+\newblock {\em Statistica Sinica}, 20(3):927--960, 2010.
+
+\bibitem{khareBayesianApproachEnvelope2017}
+K.~Khare, S.~Pal, and Z.~Su.
+\newblock A {{Bayesian}} approach for envelope models.
+\newblock {\em The Annals of Statistics}, 45(1):196--222, Feb. 2017.
+
+\end{thebibliography}
