@@ -1,4 +1,4 @@
-
+import numba
 import numpy as np
 from scipy import stats
 import scipy.special as sc
@@ -16,6 +16,7 @@ def densigamma(x, alpha, beta):
     assert (x > 0).all(), "Density not defined outside the support"
     return np.power(beta, alpha) / gamma_function(alpha) * np.power(x, - alpha - 1.) * np.exp(- beta / x)
 
+numba.jit(nopython=True)
 def discrete_truncated_inverse_gamma(shape, rate, lower, upper, step, max_upper):
    
     # Check upper bound
@@ -41,7 +42,7 @@ def discrete_truncated_inverse_gamma(shape, rate, lower, upper, step, max_upper)
 
     return rng.choice(a = x, size=1, replace=True, p=np.squeeze(prob), shuffle=False)
 
-
+numba.jit(nopython=True)
 def truncated_inverse_gamma(shape, rate, lower, upper, max_iter=10e5, partition=10, max_upper=10e5):
     '''
     This function compute a sample from a truncated inverse gamma
@@ -73,6 +74,7 @@ def truncated_inverse_gamma(shape, rate, lower, upper, max_iter=10e5, partition=
         warnings.warn("Exceeded maximum number of iterations: resorting to approximate distribution.")
         return discrete_truncated_inverse_gamma(shape, rate, lower, upper, partition, max_upper)
 
+numba.jit(nopython=True)
 def discrete_bingham(A, B, N=4*10e5):
     '''
     This function samples from the discrete approximation
@@ -99,6 +101,7 @@ def discrete_bingham(A, B, N=4*10e5):
 
     return np.column_stack((x_1, x_2))
 
+numba.jit(nopython=True)
 def get_m_from_w(w):
     '''
     This function create an orthogonal matrix from the initial cosine of an angle.
@@ -116,7 +119,7 @@ def get_m_from_w(w):
         x_2 = np.array([x_1[1], -x_1[0]]) * (-1.) ** rng_bin.binomial(n = 1, p = 0.5)
     return np.column_stack((x_1, x_2))
 
-
+numba.jit(nopython=True)
 def sample_bingham(A, B, max_iter=1e5, N=4e5):
     ''''
     This function samples from a Bingham distribution
