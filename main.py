@@ -2,9 +2,6 @@ import numpy as np
 from src.gibbs import gibbs_sampler
 import pickle
 import datetime
-from scipy.stats import multivariate_normal, ortho_group
-import time
-import datetime
 
 
 if __name__ == "__main__":
@@ -12,10 +9,10 @@ if __name__ == "__main__":
     r = 3
     u = 1
     p = 2
-    n = 180
+    n = 100
 
-    data_get = multivariate_normal(cov = np.eye(p))
-    X = data_get.rvs(n, random_state=random_state)
+    rng = np.random.default_rng(random_state)
+    X = rng.multivariate_normal(mean = np.zeros(p), cov = np.eye(p))
 
     Gamma = np.eye(r)[:, 0].reshape((r, u))
     Gamma_0 = np.eye(r)[:, [1, 2]]
@@ -45,7 +42,8 @@ if __name__ == "__main__":
     prior = dict()
 
     mu_0 = np.zeros(r)
-    Sigma_0 = np.eye(r)
+    kappa = 10.
+    Sigma_0 = kappa * np.eye(r)
     C = np.eye(p)
     e = np.zeros((r, p))
     D = np.eye(r)
@@ -86,10 +84,11 @@ if __name__ == "__main__":
     prior["omega_0"] = omega_0
 
     # Starting Values ------
-    rng = np.random.default_rng(random_state)
     starting_vals = dict()
     starting_vals["mu"] = rng.random(p)
-    O = ortho_group.rvs(r)
+    O = np.array([[-0.29222903, -0.46191842,  0.8373969 ],
+       [-0.93783071, -0.03306144, -0.34551483],
+       [ 0.18728521, -0.886306  , -0.42353976]])
     starting_vals["Gamma"] = O[:, 0:u]
     starting_vals["Gamma_0"]  = O[:, u:r]
     starting_vals["eta"] = rng.random(p).reshape((u, p))
@@ -103,11 +102,11 @@ if __name__ == "__main__":
     print("\n\n")
 
     # Samplings
-    mcmc = gibbs_sampler(Y, X, u, prior, starting_vals, 8000)
+    mcmc = gibbs_sampler(Y, X, u, prior, starting_vals, 2000)
 
     # Saving
     nowTime = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-    file_name = f"/home/masca/Insync/andrea.mascaretti@studenti.unipd.it/Google Drive/phd/envelopes_files/mcmc-{nowTime}.pkl"
+    file_name = f"/home/masca/Insync/andrea.mascaretti@studenti.unipd.it/Google Drive/phd/envelopes_files/mcmc/prior/mcmc-{nowTime}.pkl"
 
     with open(file_name, 'wb') as file:
     # A new file will be created
