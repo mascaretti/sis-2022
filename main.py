@@ -2,7 +2,7 @@ import numpy as np
 from src.gibbs import gibbs_sampler
 import pickle
 import datetime
-from scipy.stats import multivariate_normal
+from scipy.stats import multivariate_normal, ortho_group
 import time
 import datetime
 
@@ -22,7 +22,6 @@ if __name__ == "__main__":
     eta = 19. * np.ones(p).reshape((u, p))
 
     B = Gamma @ eta
-    # print(f"Beta: {B}")
 
     mu = 12. * np.ones(r)
 
@@ -51,10 +50,10 @@ if __name__ == "__main__":
     e = np.zeros((r, p))
     D = np.eye(r)
     G = np.eye(r)
-    alpha = 6.
-    psi = 6.
-    alpha_0 = 6.
-    psi_0 = 6.
+    alpha = 3.
+    psi = 3.
+    alpha_0 = 3.
+    psi_0 = 3.
 
     # mu
     mu = dict()
@@ -87,20 +86,24 @@ if __name__ == "__main__":
     prior["omega_0"] = omega_0
 
     # Starting Values ------
+    rng = np.random.default_rng(random_state)
     starting_vals = dict()
-    starting_vals["mu"] = 12. * np.ones(r)
-    starting_vals["Gamma"] = np.eye(r)[:, 0].reshape((r, u))
-    starting_vals["Gamma_0"]  = np.eye(r)[:, [1, 2]]
-    starting_vals["eta"] = 19. * np.ones(p).reshape((u, p))
-    starting_vals["omega"] = np.array([6.2])
-    starting_vals["omega_0"] = np.array([3.2, 1.4])
+    starting_vals["mu"] = rng.random(p)
+    O = ortho_group.rvs(r)
+    starting_vals["Gamma"] = O[:, 0:u]
+    starting_vals["Gamma_0"]  = O[:, u:r]
+    starting_vals["eta"] = rng.random(p).reshape((u, p))
+    starting_vals["omega"] = np.array([rng.integers(100)])
+    omega_0_1 = rng.integers(starting_vals["omega"])
+    omega_0_2 = rng.integers(omega_0_1)
+    starting_vals["omega_0"] = np.squeeze(np.array([omega_0_1, omega_0_2]))
 
-    # print(starting_vals.get("Gamma").shape)
-    # print(starting_vals.get("eta").shape)
+    print(starting_vals)
 
+    print("\n\n")
 
     # Samplings
-    mcmc = gibbs_sampler(Y, X, u, prior, starting_vals, 1000)
+    mcmc = gibbs_sampler(Y, X, u, prior, starting_vals, 8000)
 
     # Saving
     nowTime = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
