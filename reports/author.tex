@@ -52,9 +52,13 @@
 %
 \maketitle
 
-\abstract{The abstract should be written in English and in Italian, each paper should be preceded by an abstract (no more than 10 lines long) that summarizes the content. Please insert your abstract here.}
-\abstract{\emph{Abstract in Italian}}
-\keywords{key word 1, key word 2, \ldots}
+\abstract{Envelope models are multivariate linear regression
+  techniques that aims at reducing the variance of the
+  estimator. Bayesian envelopes allow to quantify the uncertainty of
+  inference by means of the posterior distribution. In this work, we
+  construct a proper prior distribution and compare it to the existing
+  literature. A prior sensitivity is conducted, yielding similar
+  results.}  \abstract{\emph{I modelli envelope sono una particolare tipologia di regressione lineare multivariata finalizzata a ridurre la varianze degli stimatori. La formulazione bayesiana di questi modelli consente di quantificare direttamente l'incertezza degli stimatori mediante l'analisi della posterior. In questo lavoro, proponiamo una prior propria per il modello e valutiamo l'impatto della prior sull'inferenza, ottenendo risultati comparabili alle proposte presenti in letteratura.}} \keywords{envelope models, bayesian statistics}
 
 \section{Response Envelopes}
 \label{sec:1}
@@ -239,8 +243,20 @@ we consider the improper prior as in
 \cite{khareBayesianApproachEnvelope2017}. The other parameters are set
 as follows: $C = I_p$, $D = I_r$, $G = I_r$, $\alpha = 3$, $\psi = 3$, $\alpha_0 = 3$ and $\psi_0 = 3$.
 
-For each case study, we run
-a Gibbs sampler for 2000 iterations, with a burn in of 500.
+For each case study, we run a Gibbs sampler for 2000 iterations, with
+a burn in of 500. The initialisation for each chain was from the same
+random point in the parameter space.
+
+\section{Conclusions}
+In this work, we have constructed a proper prior distribution for a
+Bayesian envelope model. We carried out an assessment of the prior
+sensitivity on a simple test case, obtaining that the choice of the
+hyperparameters for the parameter $\mu$ yield similar results in the
+three cases studied: a weakly informative, an empirical one and a
+non-informative prior. As such, this model endowed with a proper prior
+can be extended to more complex scenarios. For instance, it can be
+used as a building block for a mixture model, as opposed to the a
+model with an improper prior.
 
 \input{referenc}
 \end{document}
