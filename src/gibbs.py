@@ -168,12 +168,12 @@ def gibbs_sampler(Y: np.ndarray, X: np.ndarray, u: int, prior: dict, starting_va
 
         # Update mu --------
         rng = np.random.default_rng()
-        # Sigma_0_inv = np.linalg.inv(Sigma_0)
-        # Sigma_1_inv = np.linalg.inv(Sigma / n)
-        # Sigma_c = np.linalg.inv(Sigma_0_inv + Sigma_1_inv)
-        # mu_c = Sigma_c @ (Sigma_0_inv @ mu_0 + Sigma_1_inv @ Y_bar)
-        # mu = rng.multivariate_normal(mu_c, Sigma_c)
-        mu = rng.multivariate_normal(Y_bar, Sigma / n)
+        Sigma_0_inv = np.linalg.inv(Sigma_0)
+        Sigma_1_inv = np.linalg.inv(Sigma / n)
+        Sigma_c = np.linalg.inv(Sigma_0_inv + Sigma_1_inv)
+        mu_c = Sigma_c @ (Sigma_0_inv @ mu_0 + Sigma_1_inv @ Y_bar)
+        mu = rng.multivariate_normal(mu_c, Sigma_c)
+        # mu = rng.multivariate_normal(Y_bar, Sigma / n)
         mcmc["mu"][i] = mu
 
     return mcmc
