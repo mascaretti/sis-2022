@@ -57,13 +57,13 @@
   estimator. Bayesian envelopes allow to quantify the uncertainty of
   inference by means of the posterior distribution. In this work, we
   construct a proper prior distribution and compare it to the existing
-  literature. A prior sensitivity is conducted, yielding similar
+  literature. A prior sensitivity analysis is conducted, yielding similar
   results.}  \abstract{\emph{I modelli envelope sono una particolare tipologia di regressione lineare multivariata finalizzata a ridurre la varianze degli stimatori. La formulazione bayesiana di questi modelli consente di quantificare direttamente l'incertezza degli stimatori mediante l'analisi della posterior. In questo lavoro, proponiamo una prior propria per il modello e valutiamo l'impatto della prior sull'inferenza, ottenendo risultati comparabili alle proposte presenti in letteratura.}} \keywords{envelope models, bayesian statistics}
 
 \section{Response Envelopes}
 \label{sec:1}
 Envelopes
-\cite{cookENVELOPEMODELSPARSIMONIOUS2010,cookIntroductionEnvelopesDimension2018},
+\cite{cookENVELOPEMODELSPARSIMONIOUS2010,cookIntroductionEnvelopesDimension2018}
 are a class of models aimed at increasing the efficiency of
 multivariate regression by exploiting the relations between response
 and predictors that affect the accuracy of the results and are not
@@ -78,7 +78,7 @@ $Y \in R^r$ is given a functional form such that we get
 where $\left\{X_i\right\}_{i = 1}^n$ is a sequence of non-stochastic
 vectors, with $X_i \in R^p$ for $i = 1, \dots, n$, the errors are
 independent and identically distributed multivariate normal vectors
-with zero mean and covariance $\Sigma$, $\alpha \in R^r$ is an unknown
+with zero mean and covariance $\Sigma$, $\mu \in R^r$ is an unknown
 vector of intercepts and $\beta \in M_{\left( r, p \right)}$ (where
 $M_{\left( a, b \right)}$ denotes the space of real matrices of dimensions
 $\left( a, b \right)$) is the unknown vector of regression
@@ -89,14 +89,14 @@ rows $\left(Y_i - \bar{Y}\right)^T$, where $\bar{Y}$ is the sample
 mean, and $Y_0$ be the non-centred matrix. In a similar fashion, let
 $X = \left\{X_i^T\right\}$ be the matrix of the predictors,
 $S_{Y, X} = n^{-1} Y^TX$ and $S_X = n^{-1}X^TX$. The maximum
-likelihood estimator is
+likelihood estimator,
 
 \begin{equation}
   \label{eq:2}
-  B = S_{Y, X}S_X^{-1},
+  \hat{\beta} = S_{Y, X}S_X^{-1},
 \end{equation}
 
-incidentally equal the ordinary least squares estimator. From Eq.
+is incidentally equal the ordinary least squares estimator. From Eq.
 \ref{eq:2}, we notice that this is akin to performing $r$ separate
 univariate regressions: one for every element of $Y$ on $X$. Inference
 on $\beta_{j,k}$, the $\left( j, k \right)$th element of $\beta$ is
@@ -125,7 +125,7 @@ $O = \left[ \Gamma \;  \Gamma_0 \right]$ is orthogonal. We obtain
 \item $\Gamma^T Y \perp \Gamma_0^T Y | X$
 \end{enumerate}
 
-The conditions entail that
+The conditions above entail that
 $\mathrm{span}\left( \beta \right) \subseteq \mathrm{span}\left(
   \Gamma \right)$ and
 $\Sigma = \Sigma_1 + \Sigma_2 = P_{\Gamma}\Sigma P_{\Gamma} +
@@ -158,15 +158,16 @@ rationale behind Bayesian envelopes is that it allows to quantify the
 uncertainty of the predictions by computing the posterior distribution
 (as opposed to bootstrap or asymptotic considerations), as well as
 extending the model to the cases where $n < r$. Moreover, prior
-information can be incorporated into the model, be it on the values of
-the parameters or to induce sparsity or other desirable properties. As
-for the selection of $u$, the dimension of the envelope,
-\cite{khareBayesianApproachEnvelope2017} adopt a Deviance Information
-Criterion to obtain the best value, in lieu of the Likelihood Ratio
-Tests used within the frequentist framework.  The interest in
-obtaining a proper prior distribution for a Bayesian envelope stems
-from the fact that this is a prerequisite to extend it to more complex
-scenarios, such as mixtures or nonparametric formulations.
+information can be incorporated into the learning process, be it on
+the values of the parameters or to induce sparsity or other desirable
+properties. As for the selection of $u$, the dimension of the
+envelope, \cite{khareBayesianApproachEnvelope2017} adopt a Deviance
+Information Criterion to obtain the best value, in lieu of the
+Likelihood Ratio Tests used within the frequentist framework.  The
+interest in obtaining a proper prior distribution for a Bayesian
+envelope stems from the fact that this is a prerequisite to extend it
+to more complex scenarios, such as mixtures or nonparametric
+formulations.
 
 The prior distribution is defined on the parameters
 $\left( \mu, \eta, \left(\Gamma, \Gamma_0\right), \Omega, \Omega_0
@@ -193,7 +194,7 @@ decreasing order.
 We define the prior on the parameters as follows:
 
 \begin{enumerate}
-\item $\mu$ is set to be independent from the other parameters. We endow it with a multivariate normal distribution, so that $\pi \left( \mu \right) = \mathcal{N}_r \left( \mu_0, \Sigma_0 \right)$, defined with respect to Lebesgue measure on $M_{\left( r, 1 \right)}$.
+\item $\mu$ is set to be independent from the other parameters. We endow it with a multivariate normal distribution, so that $\pi \left( \mu \right) = \mathcal{N}_r \left( \mu_0, \Sigma_0 \right)$,
 \item The conditional prior on $\eta$ is a matrix normal: $$\pi \left( \eta | \left( \Gamma, \Gamma_0, \Omega, \Omega_0 \right) \right) = \mathcal{N}_{\left( u, p \right)}\left( \Gamma^T, \Omega, C^{-1} \right),$$ where $C^{-1}$ is a positive definite matrix in $M_{\left( p, p \right)}$.
 \item The prior on $O = \left( \Gamma, \Gamma_0 \right)$ is a matrix Bingham distribution with parameters $G$ and $D$, where $G$ is a positive semi-definite matrix in $M_{\left( r, r \right)}$ and $D$ is in $O_r$ with positive entries. Thus, $\pi \left( O \right) = \mathcal{B}_{\left( r, r \right)}\left( G, D^{-1} \right)$. The density is proportional to $\exp{\left\{ \left(-1/2\right) \mathrm{tr}\left( D^{-1}O^TGO\right) \right\}}$
 \item Denoting by $\omega$ and $\omega_0$ the diagonal vectors of, respectively, $\Omega$ and $\Omega_0$, we assume that, a priori, they are distributed as order statistics of $u$ and $r - u$ independent and identically distributed observations from Inverse-Gamma distributions of shape and rate parameters $\alpha$, $\psi$ and $\alpha_0$, $\psi_0$.
@@ -211,7 +212,7 @@ the form
   \pi \left( \mu | \eta, \left( \Gamma, \Gamma_0 \right), \omega, \omega_0, Y \right) = \mathcal{N}_r\left( \mu_{c}, \Sigma_{c} \right),
 \end{equation}
 
-where $$\Sigma_{c} = \left( \Sigma^{-1}_0 + \left(\frac{\Sigma}{n} \right)^{-1}\right)^{-1}$$ and $$\mu_{c} = \Sigma_{c} \left( \Sigma_0^{-1} \mu_0 + \left(\frac{\Sigma}{n} \right)^{-1} \bar{Y} \right).$$
+where $$\Sigma_{c} = \left( \Sigma^{-1}_0 + \left(\frac{\Sigma}{n} \right)^{-1}\right)^{-1},$$ and $$\mu_{c} = \Sigma_{c} \left( \Sigma_0^{-1} \mu_0 + \left(\frac{\Sigma}{n} \right)^{-1} \bar{Y} \right).$$
 
 Notice that the Harris ergodicity of the chain is also a
 straightforward extension of \cite{khareBayesianApproachEnvelope2017}.
@@ -221,7 +222,7 @@ We now perform a test for different values of the prior distribution
 on a synthetic dataset. The aim is to assess the sensitivity with
 respect to the choice of the hyperparameters. We generated $n = 100$
 data points from a normal distribution with zero mean and identity
-matrix as covariance. We set $u = 1$, $p = 2$, $r = 3$ The parameters
+matrix as covariance. We set $u = 1$, $p = 2$, $r = 3$. The parameters
 are defined as follows:
 
 \begin{enumerate}
@@ -238,14 +239,79 @@ hyperparamaters, we distinguish between three cases. We focus on $\mu$
 as it is the most relevant change we make. In the first case, we use a
 weakly informative proper prior with $\mu_0 = \left( 0, 0, 0 \right)$
 and $\Sigma_0 = \kappa I_r$, with $\kappa = 10$. In the second test
-case, we set $\mu_0 = \bar{Y}$ and $\Sigma = \hat{\Sigma}$. Finally,
+case, we set $\mu_0 = \bar{Y}$ and $\Sigma = I_{r}$. Finally,
 we consider the improper prior as in
 \cite{khareBayesianApproachEnvelope2017}. The other parameters are set
 as follows: $C = I_p$, $D = I_r$, $G = I_r$, $\alpha = 3$, $\psi = 3$, $\alpha_0 = 3$ and $\psi_0 = 3$.
 
-For each case study, we run a Gibbs sampler for 2000 iterations, with
-a burn in of 500. The initialisation for each chain was from the same
+For each case study, we run a Gibbs sampler for 1000 iterations, with
+a burn in of 300. The initialisation for each chain was from the same
 random point in the parameter space.
+
+Results for the three components of $\mu$ are reported, respectively
+in Tables \ref{tab:1}, \ref{tab:2}, and \ref{tab:3}.
+
+We see that even though the empirical and the noninformative priors
+lead to somewhat closer posterior estimates, the effect of placing a
+weakly informative prior also yields posterior higher density
+intervals that are in line with the other two classes of prior
+distributions. However, the true advantage of a proper prior is that
+it allows for extending the model to more complex settings. The fact
+that it yields similar results notwithstanding different
+hyperparameters is certainly encouraging, although, as always, some
+care should be put in their refinement.
+
+\begin{table}
+\caption{Posterior inference for $\mu = \left( \mu_{1}, \mu_{2}, \mu_{3} \right)$ with a weakly informative prior: posterior higher density interval (HDI) are reported.}
+\label{tab:1}       % Give a unique label
+%
+% Follow this input for your own table layout
+%
+\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\hline\noalign{\smallskip}
+Parameter & Mean & 3\% HDI & 97\% HDI \\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+$\mu_{1}$ & 12.67  & 12.005 & 13.359 \\
+$\mu_2$ & 12.043 & 11.715 & 12.324\\
+$\mu_3$ & 12.097  & 11.882 & 12.313 \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+\end{table}
+
+\begin{table}
+\caption{Posterior inference for $\mu = \left( \mu_{1}, \mu_{2}, \mu_{3}\right)$ with a empirical prior: posterior higher density interval (HDI) are reported.}
+\label{tab:2}       % Give a unique label
+%
+% Follow this input for your own table layout
+%
+\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\hline\noalign{\smallskip}
+Parameter & Mean & 3\% HDI & 97\% HDI \\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+$\mu_{1}$ & 12.832  & 12.1 & 13.49 \\
+$\mu_2$ & 12.071 & 11.746 & 12.361\\
+$\mu_3$ & 12.117  & 11.903 & 12.307 \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+\end{table}
+
+
+\begin{table}
+\caption{Posterior inference for $\mu = \left( \mu_{1}, \mu_{2}, \mu_{3}\right)$ with a noninformative prior: posterior higher density interval (HDI) are reported.}
+\label{tab:3}       % Give a unique label
+%
+% Follow this input for your own table layout
+%
+\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\hline\noalign{\smallskip}
+Parameter & Mean & 3\% HDI & 97\% HDI \\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+$\mu_{1}$ & 12.85  & 12.246 & 13.425 \\
+$\mu_2$ & 12.07 & 11.74 & 12.364\\
+$\mu_3$ & 12.121  & 11.916 & 12.286 \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+\end{table}
 
 \section{Conclusions}
 In this work, we have constructed a proper prior distribution for a
@@ -256,7 +322,8 @@ three cases studied: a weakly informative, an empirical one and a
 non-informative prior. As such, this model endowed with a proper prior
 can be extended to more complex scenarios. For instance, it can be
 used as a building block for a mixture model, as opposed to the a
-model with an improper prior.
+model with an improper prior. This is especially true given the
+stability of posterior HDIs in three cases.
 
 \input{referenc}
 \end{document}
